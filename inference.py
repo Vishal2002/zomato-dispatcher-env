@@ -215,7 +215,9 @@ def run_episode(task_id: str) -> float:
 
         # Skip step if LLM says nothing to do
         if action.get("order_id") == "SKIP":
-            print(f"  step={step:02d} | [waiting — no pending orders/riders]")
+            print(f"  step={step:02d} | [waiting — letting deliveries complete]")
+            obs = env_step(FALLBACK_ORDER, FALLBACK_RIDER)
+            history.append(f"step{step}:wait(r={obs.get('episode_reward_so_far',0):.1f})")
             step += 1
             continue
 

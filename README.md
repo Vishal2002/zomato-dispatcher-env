@@ -1,5 +1,23 @@
 # Zomato Dispatcher OpenEnv
 
+---
+title: Zomato Dispatcher OpenEnv
+emoji: 🛵
+colorFrom: purple
+colorTo: indigo
+sdk: docker
+pinned: false
+license: mit
+tags:
+  - openenv
+  - reinforcement-learning
+  - logistics
+  - food-delivery
+  - real-world
+short_description: Food delivery dispatch RL environment — OpenEnv compatible
+---
+
+
 > **Food delivery order dispatch** — a real-world RL environment built on the
 > [OpenEnv](https://github.com/meta-pytorch/OpenEnv) framework.
 
