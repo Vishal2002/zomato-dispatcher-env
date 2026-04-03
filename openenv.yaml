@@ -1,0 +1,53 @@
+spec_version: 1
+name: zomato-dispatcher-env
+type: environment
+runtime: docker
+app: server.app:app
+port: 7860
+
+description: >
+  Food delivery order dispatch RL environment inspired by Zomato/Swiggy.
+  An AI agent acts as a fleet dispatcher assigning orders to riders across
+  city zones to maximise on-time delivery while avoiding SLA breaches.
+
+tags:
+  - logistics
+  - food-delivery
+  - real-world
+  - dispatch
+
+tasks:
+  - id: single_zone
+    difficulty: easy
+    max_steps: 15
+
+  - id: multi_zone
+    difficulty: medium
+    max_steps: 25
+
+  - id: peak_hour
+    difficulty: hard
+    max_steps: 35
+
+action:
+  type: object
+  properties:
+    order_id:
+      type: string
+      description: "Order identifier e.g. ORD-001"
+    rider_id:
+      type: string
+      description: "Rider identifier e.g. RIDER-1"
+  required: [order_id, rider_id]
+
+observation:
+  type: object
+  properties:
+    step: { type: integer }
+    task_id: { type: string }
+    done: { type: boolean }
+    reward: { type: number }
+    delivered_count: { type: integer }
+    cancelled_count: { type: integer }
+    pending_orders: { type: integer }
+    episode_reward_so_far: { type: number }
