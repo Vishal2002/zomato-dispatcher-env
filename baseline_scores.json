@@ -1,9 +1,9 @@
 {
   "scores": {
     "single_zone": 1.0,
-    "multi_zone": 0.655,
-    "peak_hour": 0.475
+    "multi_zone": 0.885,
+    "peak_hour": 0.37
   },
-  "average": 0.71,
-  "model": "gpt-4o-mini"
+  "average": 0.75,
+  "model": "Qwen/Qwen2.5-72B-Instruct"
 }
