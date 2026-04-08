@@ -155,7 +155,8 @@ def env_grade():
 
 
 def run_episode(task_id):
-    print(f"\n--- {task_id} ---")
+    print(f"\n--- {task_id} ---", flush=True)
+    print(f"[START] task={task_id}", flush=True)
 
     obs = env_reset(task_id)
     history = []
@@ -163,7 +164,6 @@ def run_episode(task_id):
 
     while not obs.get("done") and step < MAX_STEPS:
         user_msg = build_user_prompt(obs, history)
-
         response_text = ""
 
         if _client:
@@ -172,38 +172,37 @@ def run_episode(task_id):
                     model=MODEL_NAME,
                     messages=[
                         {"role": "system", "content": SYSTEM_PROMPT},
-                        {"role": "user", "content": user_msg},
+                        {"role": "user",   "content": user_msg},
                     ],
                     temperature=TEMPERATURE,
                     max_tokens=MAX_TOKENS,
                 )
                 response_text = completion.choices[0].message.content or ""
             except Exception as e:
-                print(f"[LLM error] {e}")
-
+                print(f"[LLM error] {e}", flush=True)
         else:
-            print(f"step={step} | no client → fallback")
+            print(f"step={step} | no client → fallback", flush=True)
 
-        action = (
-            parse_action(response_text)
-            if response_text
-            else greedy_fallback(obs)
-        )
+        action = parse_action(response_text) if response_text else greedy_fallback(obs)
 
-        print(f"step={step} → {action}")
+        # Handle SKIP — still advance world
+        if action.get("order_id") == "SKIP":
+            obs = env_step(FALLBACK_ORDER, FALLBACK_RIDER)
+        else:
+            obs = env_step(
+                action.get("order_id", FALLBACK_ORDER),
+                action.get("rider_id", FALLBACK_RIDER),
+            )
 
-        obs = env_step(
-            action.get("order_id", FALLBACK_ORDER),
-            action.get("rider_id", FALLBACK_RIDER),
-        )
+        reward = obs.get("episode_reward_so_far", 0)
+        print(f"[STEP] step={step} reward={reward:.4f}", flush=True)
 
         history.append(str(action))
         step += 1
 
     score = env_grade().get("score", 0)
-    print(f"Score: {score}")
+    print(f"[END] task={task_id} score={score:.4f} steps={step}", flush=True)
     return score
-
 
 def main():
     print("Running inference")
