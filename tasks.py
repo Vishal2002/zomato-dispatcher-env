@@ -71,7 +71,7 @@ TASK_MULTI_ZONE = TaskConfig(
     max_steps=25,
     zones=5,
     has_busy_riders=True,   # 1 rider starts mid-delivery
-    sla_pressure=1.0,       # normal deadlines
+    sla_pressure=1.4,       # normal deadlines
     surge_at_step=0,
     seed=42,
 )
@@ -97,7 +97,7 @@ TASK_PEAK_HOUR = TaskConfig(
     max_steps=35,
     zones=5,
     has_busy_riders=True,   # 2 riders start mid-delivery
-    sla_pressure=0.6,       # tight deadlines
+    sla_pressure=0.8,       # tight deadlines
     surge_at_step=10,       # surge event
     seed=42,
 )

@@ -1,9 +1,9 @@
 {
   "scores": {
     "single_zone": 0.999,
-    "multi_zone": 0.77,
-    "peak_hour": 0.37
+    "multi_zone": 0.999,
+    "peak_hour": 0.692
   },
-  "average": 0.71,
+  "average": 0.9,
   "model": "gpt-4o-mini"
 }

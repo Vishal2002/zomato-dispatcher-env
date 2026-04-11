@@ -6,3 +6,4 @@ pydantic
 openai
 requests
 openai
+openenv-core
